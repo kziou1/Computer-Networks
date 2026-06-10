@@ -1,0 +1,13 @@
+Received SYN-ACK
+Sent ACK
+Handshake successful.
+----------------------------------------
+File transfered in  1.6024 sec.
+Average Throughput: 34435.72 Kbps
+----------------------------------------
+File sent. Sending FIN...
+Received ACK.
+Did not receive FIN.
+Did not receive FIN...
+Sent final ACK.
+Closing connection.

@@ -1,0 +1,42 @@
+README
+
+Overview
+This project is an implementation of a Reliable Data Transfer (RDT) protocol built on top of UDP for uploading a file from a client to a server. The protocol ensures reliable delivery even in the presence of packet loss. The provided sample.pdf file is transferred from the client and reconstructed as a copy on the server side.
+
+Makefile Targets
+- make stop
+  Copies the following into both loss/ and no_loss/:
+  - stop_wait/server.py
+  - stop_wait/client.py
+  - rdt_lib.py
+
+- make pipeline
+  Copies the following into both loss/ and no_loss/:
+  - pipelined/server.py
+  - pipelined/client.py
+  - rdt_lib.py
+
+Network Emulation (loss and no_loss)
+Inside both the loss/ and no_loss/ directories, you can create a virtual network topology using:
+  sudo python3 run_topo.py
+
+This creates two virtual hosts:
+- h1: client host
+- h2: server host (IP: 10.0.0.2)
+
+The difference between the directories:
+- no_loss: 0% packet loss
+- loss: 5% packet loss
+
+Running the Program
+1. Open two xterm windows (one for each host).
+2. On host h2 run fist the server:
+   python3 server.py
+3. On host h1 run then the client:
+   python3 client.py <server_ip> <filename>
+
+Example:
+   python3 client.py 10.0.0.2 sample.pdf
+
+The uploaded file will be received by the server and saved as a copy in the server's working directory.
+

@@ -1,0 +1,53 @@
+README
+
+LAN with Throughput Restrictions
+
+Overview
+This environment demonstrates a LAN topology with multiple routers and enforced throughput limitations on network links. Router forwarding is configured manually, and link correctness is validated using iperf with controlled bandwidths.
+
+Reproducibility: How to Run
+
+1. Environment Setup
+Navigate to the ex3 directory and start the LAN topology:
+  sudo python3 run_topo.py
+
+This initializes the Mininet environment with hosts and routers.
+
+2. Configure Router Forwarding
+After the topology is running, forwarding rules must be configured on all routers using the provided bash scripts.
+
+You can do this in one of two ways:
+
+Option A: From the Mininet CLI
+Run the following commands:
+  mininet> r1 ./r1.sh
+  mininet> r2 ./r2.sh
+  mininet> r3 ./r3.sh
+  mininet> r4 ./r4.sh
+
+Option B: Using Router Xterms
+Open an xterm window for each router and execute the corresponding script in each router’s terminal:
+  ./r1.sh
+  ./r2.sh
+  ./r3.sh
+  ./r4.sh
+
+3. Execution and Validation (Throughput Testing)
+iperf is used to verify that throughput restrictions on the links are enforced correctly.
+
+Step 1: Start UDP iperf servers
+Start a server on host H5 with an expected rate of 8 Mbps:
+  h5 iperf -s -u -i 1 > h5_server_output.txt &
+
+Start a server on host H3 with an expected rate of 12 Mbps:
+  h3 iperf -s -u -i 1 > h3_server_output.txt &
+
+Step 2: Start UDP iperf clients
+Start host H1 sending traffic at 8 Mbps in the background:
+  h1 iperf -c 10.0.2.10 -u -b 8M -t 15 &
+
+Start host H2 sending traffic at 12 Mbps in the foreground:
+  h2 iperf -c 10.0.3.10 -u -b 12M -t 15
+
+The iperf output can be used to verify that the achieved throughput matches the configured bandwidth constraints.
+
